@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    {{ message }}
+  <div id="app" class="ui grid">
+    <scheduler-create class="twelve wide centered column" />
   </div>
 </template>
 
