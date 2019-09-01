@@ -1,8 +1,8 @@
 <template>
-  <div :class="['ui fluid', { error: !!error_message } ,'input']">
-    <shared-error-label v-if="show_error_on_top" :message="error_message" position="above" />
-    <input type="text" v-model="internal_time" @blur="emit_input" />
-    <shared-error-label v-if="show_error_below" :message="error_message" position="below" />
+  <div :class="['ui fluid', { error: !!internal_error_message } ,'input']">
+    <shared-error-label v-if="show_error_on_top" :message="internal_error_message" position="above" />
+    <input type="text" v-model="internal_time" @blur="emit_input" @input="clear_internal_error_message" />
+    <shared-error-label v-if="show_error_below" :message="internal_error_message" position="below" />
   </div>
 </template>
 
@@ -12,6 +12,7 @@
       prop: 'time'
 
     data: ->
+      internal_error_message: ''
       internal_time: ''
 
     props:
@@ -30,14 +31,22 @@
       emit_input: ->
         @$emit 'input', @internal_time
 
+      clear_internal_error_message: ->
+        @internal_error_message = null
+
     computed:
       show_error_on_top: ->
-        @error_message && @role == 'start'
+        @internal_error_message && @role == 'start'
 
       show_error_below: ->
-        @error_message && @role == 'finish'
+        @internal_error_message && @role == 'finish'
 
     watch:
+      error_message:
+        immediate: true
+        handler: ->
+          @internal_error_message = @error_message
+
       time:
         immediate: true
         handler: ->
