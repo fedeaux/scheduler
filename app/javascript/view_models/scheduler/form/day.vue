@@ -31,7 +31,7 @@
     watch:
       twenty_four_hours: ->
         if @twenty_four_hours
-          @emit_input start: '00:00', finish: '24:00'
+          @emit_input start: '00:00', finish: '23:59'
         else
           @emit_input start: '', finish: ''
 </script>

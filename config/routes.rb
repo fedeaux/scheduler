@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  get 'landing/index'
+  namespace :api do
+    namespace :v1 do
+      resources :schedules
+    end
+  end
 
+  get "*all" => 'landing#index'
   root 'landing#index'
 end

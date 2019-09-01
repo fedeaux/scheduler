@@ -54,7 +54,7 @@
       validate_time: (day, field) ->
         time = day[field]
 
-        if time == undefined || time == '' || time.match /^(([0-9])|([0-1][0-9])|(2[0-4])):[0-5][0-9]$/
+        if time == undefined || time == '' || time.match /^(([0-9])|([0-1][0-9])|(2[0-3])):[0-5][0-9]$/
           return @clear_error day, "#{field}_error"
 
         @set_error day, "#{field}_error", "This does't look like a valid time!"
