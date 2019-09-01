@@ -36,6 +36,11 @@ At first I added validations locally, for example, `view_models/scheduler/form/h
 
 I decided to keep using times as a string from end to end for the purposes of the exercise, a real application would probably use a library like `moment.js`.
 
+## How to read
+
+- Good places to start are `app/javascripts/packs/application.coffee` and `app/javascripts/view_models/scheduler/form.vue`.
+- In hindsight I should have added more comments
+
 ## Further Developments
 
 - We could do a "smart input" that auto changes the input value. Like '1200' -> '12:00', or transform the "interpreted" pm into actual pm '11:00' -> '23:00' or '11:pm'.
@@ -43,6 +48,7 @@ I decided to keep using times as a string from end to end for the purposes of th
 - The ui doesn't accept 24:00 as the regex would be more complicated, but it is doable.
 - The ui accepts 00:00 as the finish time, it is weird but it interprets it as 12:00.
 - The ui shows an error when the user inputs the start time and move to finish time 'Please select both times', we could use the concept of "touched" to only show this error if the user fills the start, goes to the finish, and leaves the finish without inputting in anything.
+- the `to_minutes` functions should have a named attribute for "pm".
 - Better navigation.
 - The folder `view_models/scheduler` (and all of its components) only made sense before I decided to do the full crud, I'd rename it to schedules.
 - We could separate some of the code in `app/javascript/packs/application` into their own modules.
