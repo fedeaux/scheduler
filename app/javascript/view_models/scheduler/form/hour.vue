@@ -1,7 +1,7 @@
 <template>
   <div :class="['ui fluid', { error: !!error_message } ,'input']">
     <shared-error-label v-if="show_error_on_top" :message="error_message" position="above" />
-    <input type="text" v-model="internal_time" @blur="validate" @input="error_message= false" />
+    <input type="text" v-model="internal_time" @blur="emit_input" />
     <shared-error-label v-if="show_error_below" :message="error_message" position="below" />
   </div>
 </template>
@@ -13,9 +13,11 @@
 
     data: ->
       internal_time: ''
-      error_message: false
 
     props:
+      error_message:
+        default: false
+
       time:
         default: ''
 
@@ -25,12 +27,8 @@
           role in ['start', 'end']
 
     methods:
-      validate: ->
-        if @internal_time == '' || @internal_time.match /^(([0-9])|([0-1][0-9])|(2[0-4])):[0-5][0-9]$/
-          @error_message = false
-          return @$emit 'input', @internal_time
-
-        @error_message = "This does't look like a valid time!"
+      emit_input: ->
+        @$emit 'input', @internal_time
 
     computed:
       show_error_on_top: ->

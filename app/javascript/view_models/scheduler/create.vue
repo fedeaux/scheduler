@@ -1,6 +1,6 @@
 <template>
   <div class="scheduler">
-    <scheduler-form :days="days" @input="set_day" />
+    <scheduler-form :initial_days="days" />
   </div>
 </template>
 
@@ -10,12 +10,13 @@
   export default
     data: ->
       days: []
+      error: false
 
-    methods:
-      set_day: (day) ->
-        Vue.set @days, day.weekday, day
+    mounted: ->
+      days = []
 
-    created: ->
       for weekday in [0..6]
-        Vue.set @days, weekday, { weekday: weekday, start: '', end: '' }
+         days[weekday] = { weekday: weekday, start: '', end: '', start_error: null, end_error: null }
+
+      Vue.set @, 'days', days
 </script>
