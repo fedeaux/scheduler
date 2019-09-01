@@ -1,7 +1,7 @@
 <template>
   <div class="column">
     <scheduler-form-hour role="start" :time="start" :error_message="start_error" @input="set_start" />
-    <scheduler-form-hour role="end" :time="end" :error_message="end_error"  @input="set_end" />
+    <scheduler-form-hour role="finish" :time="finish" :error_message="finish_error"  @input="set_finish" />
 
     <div class="ui checkbox">
       <input type="checkbox" v-model="twenty_four_hours" tabindex="-1">
@@ -12,7 +12,7 @@
 
 <script lang="coffee">
   export default
-    props: ['start', 'end', 'start_error', 'end_error', 'weekday']
+    props: ['start', 'finish', 'start_error', 'finish_error', 'weekday']
 
     data: ->
       twenty_four_hours: false
@@ -21,8 +21,8 @@
       set_start: (start) ->
         @emit_input { start: start }
 
-      set_end: (value) ->
-        @emit_input { end: value }
+      set_finish: (value) ->
+        @emit_input { finish: value }
 
       emit_input: (attributes) ->
         attributes.weekday = @weekday
@@ -31,7 +31,7 @@
     watch:
       twenty_four_hours: ->
         if @twenty_four_hours
-          @emit_input start: '00:00', end: '24:00'
+          @emit_input start: '00:00', finish: '24:00'
         else
-          @emit_input start: '', end: ''
+          @emit_input start: '', finish: ''
 </script>

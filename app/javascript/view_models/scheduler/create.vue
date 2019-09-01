@@ -15,7 +15,7 @@
       days = []
 
       for weekday in [0..6]
-         days[weekday] = { weekday: weekday, start: '', end: '', start_error: null, end_error: null }
+         days[weekday] = { weekday: weekday, start: '', finish: '', start_error: null, finish_error: null }
 
       Vue.set @, 'days', days
 </script>

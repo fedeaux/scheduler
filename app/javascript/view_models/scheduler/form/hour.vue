@@ -24,7 +24,7 @@
       role:
         required: true
         validator: (role) ->
-          role in ['start', 'end']
+          role in ['start', 'finish']
 
     methods:
       emit_input: ->
@@ -35,7 +35,7 @@
         @error_message && @role == 'start'
 
       show_error_below: ->
-        @error_message && @role == 'end'
+        @error_message && @role == 'finish'
 
     watch:
       time:

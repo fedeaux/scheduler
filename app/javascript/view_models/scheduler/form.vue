@@ -4,10 +4,11 @@
     <div class="ui seven column grid">
       <scheduler-form-day v-for="day in days"
                           :start="day.start"
-                          :end="day.end"
+                          :finish="day.finish"
                           :start_error="day.start_error"
-                          :end_error="day.end_error"
+                          :finish_error="day.finish_error"
                           :weekday="day.weekday"
+                          :key="day.weekday"
                           @input="update_day"/>
     </div>
     <div class="scheduler-form-actions">
@@ -47,7 +48,7 @@
 
       validate_day: (day) ->
         @validate_time day, 'start'
-        @validate_time day, 'end'
+        @validate_time day, 'finish'
         @validate_timespan day
 
       validate_time: (day, field) ->
@@ -61,22 +62,22 @@
       validate_timespan: (day) ->
         day.valid_timespan = false
 
-        return if day.start_error or day.end_error
+        return if day.start_error or day.finish_error
 
         start_minutes = @to_minutes day.start
-        end_minutes = @to_minutes day.end, true
+        finish_minutes = @to_minutes day.finish, true
 
-        return if start_minutes == undefined and end_minutes == undefined
+        return if start_minutes == undefined and finish_minutes == undefined
 
         if start_minutes == undefined
           return @set_error day, 'start_error', 'Please select both times'
 
-        if end_minutes == undefined
-          return @set_error day, 'end_error', 'Please select both times'
+        if finish_minutes == undefined
+          return @set_error day, 'finish_error', 'Please select both times'
 
-        if end_minutes <= start_minutes
+        if finish_minutes <= start_minutes
           @set_error day, 'start_error', 'Not a valid timespan'
-          return @set_error day, 'end_error', true
+          return @set_error day, 'finish_error', true
 
         day.valid_timespan = true
 
@@ -104,7 +105,7 @@
 
         for day in @days
           Vue.set day, 'start', day_with_valid_timespan.start
-          Vue.set day, 'end', day_with_valid_timespan.end
+          Vue.set day, 'finish', day_with_valid_timespan.finish
 
         @validate()
 
