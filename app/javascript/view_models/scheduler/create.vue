@@ -10,7 +10,6 @@
   export default
     data: ->
       days: []
-      error: false
 
     mounted: ->
       days = []

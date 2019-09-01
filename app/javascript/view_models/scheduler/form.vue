@@ -60,6 +60,7 @@
 
       validate_timespan: (day) ->
         day.valid_timespan = false
+
         return if day.start_error or day.end_error
 
         start_minutes = @to_minutes day.start
@@ -74,7 +75,8 @@
           return @set_error day, 'end_error', 'Please select both times'
 
         if end_minutes <= start_minutes
-          return @set_error day, 'start_error', 'Not a valid timespan'
+          @set_error day, 'start_error', 'Not a valid timespan'
+          return @set_error day, 'end_error', true
 
         day.valid_timespan = true
 
@@ -116,6 +118,7 @@
 
     watch:
       initial_days: ->
+        # Poor's man clone
         @days = JSON.parse JSON.stringify @initial_days
 
 </script>

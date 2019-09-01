@@ -5,7 +5,5 @@
 </template>
 
 <script lang="coffee">
-export default
-  data: ->
-    message: "Hello Vue!"
+export default {}
 </script>
