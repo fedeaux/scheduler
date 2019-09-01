@@ -7,6 +7,7 @@ class Day < ApplicationRecord
   validates :finish, format: { with: HOUR_REGEX }, allow_blank: true
   validate :start_and_finish_blank_or_present
   validate :valid_timespan
+  default_scope -> { order(:weekday) }
 
   def start_and_finish_blank_or_present
     return if (start.blank? && finish.blank?) || (start.present? && finish.present?)
@@ -19,7 +20,7 @@ class Day < ApplicationRecord
     start_minutes = to_minutes start
     finish_minutes = to_minutes finish
 
-    return if start_minutes > finish_minutes
+    return if finish_minutes > start_minutes
     errors.add :base, "Not a valid timespan"
   end
 

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <shared-loader :active="loading" />
     <h1 class="scheduler-form-header"> Working Hours:* </h1>
     <div class="ui seven column grid">
       <scheduler-form-day v-for="day in days"
@@ -20,12 +21,20 @@
 
 <script lang="coffee">
   import Vue from 'vue'
+  import ScheduleResource from '../../resources/schedule'
 
   export default
     data: ->
       days: []
+      inner_schedule: {}
       valid: false
       at_least_one_valid_timespan: false
+      loading: false
+
+    props:
+      schedule:
+        required: true
+        type: Object
 
     methods:
       update_day: (day_attributes) ->
@@ -111,15 +120,23 @@
 
       save: ->
         return unless @valid
+        @loading = true
+        @inner_schedule.days = @days
+        (new ScheduleResource).save(@inner_schedule).then(@saved).fail(@errored).always(@stop_loading)
 
-    props:
-      initial_days:
-        required: true
-        type: Array
+      saved: (response) ->
+        @$router.push path: "/schedules/#{response.schedule_id}"
+
+      errored: ->
+        console.log 'errored'
+
+      stop_loading: ->
+        @loading = false
 
     watch:
-      initial_days: ->
+      schedule: ->
         # Poor's man clone
-        @days = JSON.parse JSON.stringify @initial_days
-
+        @inner_schedule = JSON.parse JSON.stringify @schedule
+        @days = @inner_schedule.days
+        @validate()
 </script>

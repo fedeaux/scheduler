@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="ui grid">
-    <scheduler-create class="twelve wide centered column" />
+    <router-view class="twelve wide centered column" />
   </div>
 </template>
 
