@@ -16,9 +16,10 @@ RSpec.describe 'Schedules', type: :request do
     end
 
     describe 'invalid attributes' do
+      # It is broken!
       it 'invalid weekdays' do
         expect {
-          post api_v1_schedules_path, params: { schedule: { days_attributes: [1..7].map { |i| day_attributes(weekday: i) } }}
+          post api_v1_schedules_path, params: { schedule: { days_attributes: [18..20].map { |i| day_attributes(weekday: i) } }}
         }.not_to change { Schedule.count }
       end
     end
