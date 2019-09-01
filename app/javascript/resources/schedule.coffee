@@ -1,6 +1,12 @@
 import $ from 'jquery'
 
 export default class Schedule
+  index: ->
+    $.ajax(
+      method: 'get',
+      url: "/api/v1/schedules.json",
+    )
+
   get: (schedule_id) ->
     $.ajax(
       method: 'get',

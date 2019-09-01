@@ -16,6 +16,7 @@
       set_schedule: (data) ->
         Vue.set @, "schedule", data
 
-    mounted: ->
-      (new ScheduleResource).get(@$route.params.schedule_id).then @set_schedule
+    created: ->
+      @loading = true
+      (new ScheduleResource).get(@$route.params.schedule_id).then(@set_schedule).always( => @loading = false )
 </script>

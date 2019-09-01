@@ -1,6 +1,10 @@
 class Api::V1::SchedulesController < Api::V1::ApiController
   before_action :set_schedule, only: [:show, :update]
 
+  def index
+    @schedules = Schedule.all
+  end
+
   def create
     @schedule = Schedule.new schedule_params
 
